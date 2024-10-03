@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/Classroom.png"/> <!-- Cambia aquí -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Enlace a Google Fonts -->
+    <title>Classroom</title>
+    <style>
+        body {
+            background-color: #543294; /* Fondo oscuro */
+            color: white; /* Texto blanco */
+            font-family: 'Roboto', sans-serif; /* Cambia a Roboto */
+            margin: 0; /* Sin márgenes */
+            padding: 10px; /* Menos espaciado interno */
+            display: flex; /* Flexbox para centrar elementos */
+            flex-direction: column; /* Colocar elementos en columna */
+            align-items: center; /* Centrar horizontalmente */
+            justify-content: flex-start; /* Alinear elementos hacia la parte superior */
+            height: 100vh; /* Altura completa de la vista */
+            overflow: hidden; /* Para que el fondo no se salga */
+            position: relative; /* Necesario para el posicionamiento absoluto del botón */
+        }
+
+        /* Glow animado para el título */
+        h1 {
+            margin: 10px 0; /* Espacio entre el título y el iframe, ajustado */
+            font-weight: 700; /* Negrita */
+            font-size: 2.5rem; /* Tamaño del título */
+            animation: glow 2s ease-in-out infinite; /* Animación glow */
+            color: #fff;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px #6f42c1, 0 0 20px #6f42c1, 0 0 30px #6f42c1;
+            }
+            50% {
+                text-shadow: 0 0 20px #ab62ff, 0 0 40px #ab62ff, 0 0 50px #ab62ff;
+            }
+            100% {
+                text-shadow: 0 0 10px #6f42c1, 0 0 20px #6f42c1, 0 0 30px #6f42c1;
+            }
+        }
+
+        /* Estilos del botón de "Volver" */
+        .back-button {
+            position: absolute; /* Posicionamiento absoluto */
+            bottom: 30px; /* Ajusta la posición hacia abajo */
+            left: 20px; /* Colocar el botón a la izquierda */
+            padding: 10px; /* Espaciado interno */
+            background-color: #6f42c1; /* Color de fondo morado */
+            color: white; /* Color del texto */
+            border: none; /* Sin borde */
+            border-radius: 5px; /* Bordes redondeados */
+            cursor: pointer; /* Cursor tipo puntero */
+            font-size: 1rem; /* Tamaño de fuente */
+            text-align: center; /* Alinear texto al centro */
+            text-decoration: none; /* Sin subrayado */
+            box-shadow: 0 0 10px rgba(111, 66, 193, 0.5); /* Glow inicial */
+            transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transición */
+            z-index: 10; /* Asegura que el botón esté en la parte superior */
+        }
+
+        .back-button:hover {
+            background-color: #5a2d94; /* Color de fondo en hover */
+            box-shadow: 0 0 20px rgba(111, 66, 193, 0.8); /* Glow más intenso */
+            transform: scale(1.05); /* Aumentar tamaño */
+        }
+
+        /* Estilos del iframe */
+        .iframe-container {
+            position: relative; /* Necesario para el posicionamiento del botón de pantalla completa */
+            width: 90%; /* Ancho del contenedor */
+            max-width: 800px; /* Ancho máximo */
+            aspect-ratio: 16 / 9; /* Mantener relación de aspecto de 16:9 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra del contenedor */
+            margin-bottom: 20px; /* Espacio entre el iframe y el botón de volver */
+        }
+
+        iframe {
+            border: none; /* Sin borde */
+            border-radius: 5px; /* Bordes redondeados */
+            width: 100%; /* Ancho total del contenedor */
+            height: 100%; /* Alto total del contenedor */
+        }
+
+        /* Estilos para el botón de pantalla completa */
+        .fullscreen-button {
+            position: absolute; /* Posicionamiento absoluto */
+            bottom: -40px; /* Ajusta la distancia desde el iframe */
+            right: 10px; /* Colocar el botón a la derecha */
+            background: none; /* Sin fondo */
+            border: none; /* Sin borde */
+            cursor: pointer; /* Cursor tipo puntero */
+            z-index: 10; /* Asegura que el botón esté en la parte superior */
+        }
+
+        .fullscreen-button img {
+            width: 30px; /* Ancho de la imagen del botón */
+            height: 30px; /* Alto de la imagen del botón */
+        }
+    </style>
+    <script>
+        // Redirigir al index.html si no se ha ingresado la contraseña
+        window.onload = function() {
+            if (!sessionStorage.getItem("accesoPermitido")) {
+                window.location.href = "index.html"; // Redirigir a index.html si no hay acceso autorizado
+            }
+        }
+
+        function toggleFullScreen() {
+            const iframe = document.getElementById("gameFrame");
+            if (!document.fullscreenElement) {
+                iframe.requestFullscreen().catch(err => {
+                    alert(`Error al intentar activar pantalla completa: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Gartic Phone</h1>
+    <div class="iframe-container"> <!-- Contenedor para el iframe y el botón de pantalla completa -->
+        <iframe id="gameFrame" src="https://garticphone.com/es" allowfullscreen></iframe>
+        <button class='fullscreen-button' onclick="toggleFullScreen()">
+            <img src="assets/fullscreen.png" alt="Pantalla Completa">
+        </button>
+    </div>
+    
+    <a class='back-button' href='home.html'>Volver</a>
+</body>
+</html>

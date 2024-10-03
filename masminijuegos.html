@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/gmail.png"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Gmail</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #543294; /* Fondo oscuro */
+            color: white; /* Texto blanco */
+            text-align: center; /* Alinear texto al centro */
+            display: flex; /* Flexbox para centrar */
+            flex-direction: column; /* Colocar en columna */
+            align-items: center; /* Centrar horizontalmente */
+            justify-content: flex-start; /* Alinear elementos hacia la parte superior */
+            height: 100vh; /* Altura total */
+            overflow: hidden; /* Evitar desbordamiento */
+            position: relative; /* Necesario para el posicionamiento del botón */
+            visibility: visible; /* Visibilidad por defecto */
+        }
+
+        h1 {
+            font-size: 2.5rem; /* Tamaño de fuente */
+            margin-bottom: 20px; /* Margen inferior */
+            font-weight: 700; /* Negrita */
+            animation: glow 2s ease-in-out infinite; /* Animación glow */
+            color: #fff;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px #6f42c1, 0 0 20px #6f42c1, 0 0 30px #6f42c1;
+            }
+            50% {
+                text-shadow: 0 0 20px #ab62ff, 0 0 40px #ab62ff, 0 0 50px #ab62ff;
+            }
+            100% {
+                text-shadow: 0 0 10px #6f42c1, 0 0 20px #6f42c1, 0 0 30px #6f42c1;
+            }
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: #ff5252;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            z-index: 10;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #e04747;
+            transform: translateY(-2px);
+        }
+
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .game-item {
+            background-color: #3a3a3a;
+            width: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .game-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .game-item p {
+            text-align: center;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #f0f0f0;
+        }
+
+        .iframe-overlay {
+            position: fixed;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: top 0.5s ease;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 80%;
+            height: 500px;
+            background-color: transparent;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: #ff5252;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-button:hover {
+            background-color: #e04747;
+        }
+
+        @media (max-width: 768px) {
+            .iframe-container {
+                width: 100%;
+                height: 400px;
+            }
+        }
+    </style>
+    <script>
+        function loadGame(url) {
+            const iframeOverlay = document.getElementById('iframe-overlay');
+            const iframeContainer = document.getElementById('iframe-container');
+            iframeContainer.innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
+            iframeOverlay.style.top = '0';
+        }
+
+        function closeIframe() {
+            const iframeOverlay = document.getElementById('iframe-overlay');
+            iframeOverlay.style.top = '-100%';
+        }
+    </script>
+</head>
+<body>
+    <h1>Selecciona un Juego</h1>
+    <div class="game-container">
+        <div class="game-item" onclick="loadGame('https://www.minijuegos.com/embed/super-mario-world-online')">
+            <img src="assets/super-mario-world.jpg" alt="Super Mario World Online">
+            <p>Super Mario World Online</p>
+        </div>
+        <div class="game-item" onclick="loadGame('https://www.minijuegos.com/embed/cashier-3d')">
+            <img src="assets/cashier3d.jpg" alt="Cashier 3D">
+            <p>Cashier 3D</p>
+        </div>
+        <div class="game-item" onclick="loadGame('https://www.minijuegos.com/embed/uno')">
+            <img src="assets/uno.svg" alt="UNO">
+            <p>UNO</p>
+        </div>
+        <div class="game-item" onclick="loadGame('https://www.minijuegos.com/embed/1v1-lol')">
+            <img src="assets/1v1lol.avif" alt="1v1 LOL">
+            <p>1v1 LOL</p>
+        </div>
+        <div class="game-item" onclick="loadGame('https://www.minijuegos.com/embed/plants-vs-zombies')">
+            <img src="assets/plantas-contra-zombies.jpg" alt="Plants vs Zombies">
+            <p>Plants vs Zombies</p>
+        </div>
+        <div class="game-item" onclick="loadGame('https://www.minijuegos.com/embed/geometry-dash')">
+            <img src="assets/geometry-dash.png" alt="Geometry Dash">
+            <p>Geometry Dash</p>
+        </div>
+        <div class="game-item" onclick="loadGame('https://www.minijuegos.com/embed/bloxd-io')">
+            <img src="assets/bloxd-io.avif" alt="Bloxd.io">
+            <p>Bloxd.io</p>
+        </div>
+        <div class="game-item" onclick="loadGame('https://www.minijuegos.com/embed/five-nights-at-freddys')">
+            <img src="assets/five-nights-at-freddy.png" alt="Five Nights at Freddy's">
+            <p>Five Nights at Freddy's</p>
+        </div>
+    </div>
+
+    <a class="back-button" href="javascript:window.history.back()">Volver</a>
+
+    <div class="iframe-overlay" id="iframe-overlay">
+        <div class="iframe-container" id="iframe-container">
+            <button class="close-button" onclick="closeIframe()">×</button>
+        </div>
+    </div>
+</body>
+</html>

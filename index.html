@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/googlee.png"/> <!-- Cambia el logo aquí -->
+    <title>Google</title>
+    <style>
+        /* Estilos para el fondo */
+        body {
+            margin: 0; /* Sin márgenes */
+            height: 100vh; /* Altura total */
+            display: flex; /* Flexbox para centrar el contenido */
+            align-items: center; /* Centrar verticalmente */
+            justify-content: center; /* Centrar horizontalmente */
+            background-image: url('assets/google.png'); /* Imagen de fondo */
+            background-size: cover; /* Cubrir toda la pantalla */
+            background-position: center; /* Centrar la imagen */
+            position: relative; /* Posicionamiento relativo */
+            background-color: transparent; /* Fondo totalmente transparente */
+        }
+
+        /* Estilos para el cuadro de búsqueda */
+        .search-box {
+            background-color: transparent; /* Fondo transparente para la barra de búsqueda */
+            padding: 10px; /* Espaciado interno */
+            border-radius: 24px; /* Bordes redondeados */
+            display: flex; /* Flexbox para alinear el input */
+            align-items: center; /* Centrar verticalmente el contenido */
+            position: absolute; /* Posicionamiento absoluto */
+            top: 43.5%; /* Ajusta la posición vertical del cuadro de búsqueda (más bajo) */
+            transform: translateY(-50%); /* Centrar verticalmente respecto al top */
+            margin-left: -200px; /* Mover el cuadro más a la izquierda */
+        }
+
+        /* Estilos para el cuadro de texto */
+        input[type="text"] {
+            border: none; /* Sin borde */
+            outline: none; /* Sin contorno */
+            padding: 10px; /* Espaciado interno */
+            width: 300px; /* Ancho del input */
+            font-size: 1rem; /* Tamaño de fuente */
+            border-radius: 24px; /* Bordes redondeados */
+            background-color: transparent; /* Fondo completamente transparente */
+            color: white; /* Texto blanco para el input */
+        }
+    </style>
+</head>
+<body>
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Buscar en Google" autocomplete="off"> <!-- Agregado 'autocomplete="off"' -->
+    </div>
+
+    <script>
+        // Función para validar la contraseña
+        function validarPassword() {
+            const password = document.getElementById('search').value; // Cambiado el id a 'search'
+            const contraseñaCorrecta = 'tuContraseña'; // Cambia esto por la contraseña que desees
+
+            if (password === contraseñaCorrecta) {
+                // Guardar acceso permitido en sessionStorage
+                sessionStorage.setItem("accesoPermitido", "true");
+                // Redirigir a home.html si la contraseña es correcta
+                window.location.href = 'home.html';
+            } else {
+                alert('Contraseña incorrecta. Intenta de nuevo.');
+            }
+        }
+
+        // Agregar un evento para detectar la tecla "Enter"
+        document.getElementById('search').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                validarPassword(); // Llama a la función al presionar "Enter"
+            }
+        });
+    </script>
+</body>
+</html>
